@@ -1,0 +1,20 @@
+/* style.css */
+:root { font-family: system-ui, Arial; }
+body { margin: 0; background: #0b0f19; color: #e8eefc; }
+.container { max-width: 720px; margin: 40px auto; padding: 24px; }
+.card { background: #121a2a; border: 1px solid #22304d; border-radius: 16px; padding: 20px; }
+h1 { margin: 0 0 12px; font-size: 24px; }
+p { margin: 0 0 16px; opacity: 0.9; }
+label { display: block; margin: 14px 0 6px; font-weight: 600; }
+input, select { width: 100%; padding: 12px 12px; border-radius: 12px; border: 1px solid #2a3a5c; background: #0e1422; color: #e8eefc; }
+button { width: 100%; margin-top: 18px; padding: 12px; border-radius: 12px; border: 0; background: #3b82f6; color: white; font-weight: 700; cursor: pointer; }
+button:disabled { opacity: 0.6; cursor: not-allowed; }
+.q { margin: 16px 0; padding: 14px; border-radius: 14px; border: 1px solid #22304d; background: #0e1422; }
+.opt { display: block; padding: 10px 10px; border-radius: 12px; border: 1px solid #22304d; margin-top: 10px; cursor: pointer; }
+.opt input { width: auto; margin-left: 8px; }
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.small { font-size: 12px; opacity: 0.75; margin-top: 10px; }
+.modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; place-items: center; padding: 16px; }
+.modal { max-width: 520px; width: 100%; background: #121a2a; border: 1px solid #22304d; border-radius: 16px; padding: 18px; }
+.modal h2 { margin: 0 0 10px; font-size: 20px; }
+.modal a { display: inline-block; margin-top: 12px; text-decoration: none; background: #22c55e; color: #06120a; padding: 10px 14px; border-radius: 12px; font-weight: 800; }

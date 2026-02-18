@@ -1,0 +1,104 @@
+<!-- index.html -->
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>English MCQ - تسجيل</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>تسجيل الدخول للامتحان</h1>
+      <p>اكتب البيانات المطلوبة ثم ابدأ الامتحان.</p>
+
+      <form id="regForm">
+        <label>الاسم</label>
+        <input id="name" required placeholder="اسم الطالب" />
+
+        <div class="row">
+          <div>
+            <label>الصف</label>
+            <select id="grade" required>
+              <option value="">اختر</option>
+              <option>الأول</option>
+              <option>الثاني</option>
+              <option>الثالث</option>
+              <option>الرابع</option>
+              <option>الخامس</option>
+              <option>السادس</option>
+              <option>الإعدادي 1</option>
+              <option>الإعدادي 2</option>
+              <option>الإعدادي 3</option>
+              <option>الثانوي 1</option>
+              <option>الثانوي 2</option>
+              <option>الثانوي 3</option>
+            </select>
+          </div>
+          <div>
+            <label>رقم الهاتف</label>
+            <input id="phone" required placeholder="01xxxxxxxxx" inputmode="tel" />
+          </div>
+        </div>
+
+        <button id="btn" type="submit">ابدأ الامتحان</button>
+        <div class="small">سيتم حفظ بياناتك ونتيجتك في سجل الامتحان.</div>
+      </form>
+    </div>
+  </div>
+
+<script>
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbw6piXRevzQmElgtYYwHDX4Rm8v8rgESKVzNjF4OxnBw-c08t9-SVby8d7GZF6QKJhY/exec";
+const API_KEY = "a9s8d7f6g5h4j3k2l1";
+
+function jsonp(url) {
+  return new Promise((resolve, reject) => {
+    const cb = "cb_" + Math.random().toString(36).slice(2);
+    window[cb] = (data) => { cleanup(); resolve(data); };
+
+    const script = document.createElement("script");
+    const sep = url.includes("?") ? "&" : "?";
+    script.src = url + sep + "callback=" + cb + "&_ts=" + Date.now();
+
+    script.onerror = () => { cleanup(); reject(new Error("JSONP failed")); };
+    document.body.appendChild(script);
+
+    function cleanup() {
+      try { delete window[cb]; } catch(_) {}
+      script.remove();
+    }
+  });
+}
+
+document.getElementById('regForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('btn');
+  btn.disabled = true;
+
+  const name = document.getElementById('name').value.trim();
+  const grade = document.getElementById('grade').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+
+  const url =
+    WEB_APP_URL +
+    "?action=register" +
+    "&api_key=" + encodeURIComponent(API_KEY) +
+    "&name=" + encodeURIComponent(name) +
+    "&grade=" + encodeURIComponent(grade) +
+    "&phone=" + encodeURIComponent(phone) +
+    "&user_agent=" + encodeURIComponent(navigator.userAgent);
+
+  try {
+    const data = await jsonp(url);
+    if (!data.ok) throw new Error(data.error || "Register failed");
+    localStorage.setItem("student_id", data.student_id);
+    window.location.href = "exam.html";
+  } catch (err) {
+    alert("خطأ: " + err.message);
+    btn.disabled = false;
+  }
+});
+</script>
+</body>
+</html>
